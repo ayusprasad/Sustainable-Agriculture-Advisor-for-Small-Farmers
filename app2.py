@@ -46,6 +46,14 @@ def generate_farming_calendar(crop_type):
 # Main function for the Streamlit app
 def main():
     st.set_page_config(page_title="Sustainable Agriculture Advisor", layout="wide", initial_sidebar_state="expanded")
+    
+    # Adding HubSpot embed code here
+    st.markdown("""
+    <!-- Start of HubSpot Embed Code -->
+    <script type="text/javascript" id="hs-script-loader" async defer src="//js-na1.hs-scripts.com/47792726.js"></script>
+    <!-- End of HubSpot Embed Code -->
+    """, unsafe_allow_html=True)
+
     st.markdown("""
     <style>
         .reportview-container {
