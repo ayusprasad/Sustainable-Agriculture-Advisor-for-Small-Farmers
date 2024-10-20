@@ -2,6 +2,7 @@ import langchain_groq
 import streamlit as st
 import os
 import random
+import streamlit.components.v1 as components
 from groq import Groq
 from langchain.chains import LLMChain
 from langchain_core.prompts import (
@@ -47,13 +48,16 @@ def generate_farming_calendar(crop_type):
 def main():
     st.set_page_config(page_title="Sustainable Agriculture Advisor", layout="wide", initial_sidebar_state="expanded")
     
-    # Adding HubSpot embed code here
-    st.markdown("""
-    <!-- Start of HubSpot Embed Code -->
-    <script type="text/javascript" id="hs-script-loader" async defer src="//js-na1.hs-scripts.com/47792726.js"></script>
-    <!-- End of HubSpot Embed Code -->
-    """, unsafe_allow_html=True)
-
+    # Add HubSpot script using components.html
+    components.html(
+        """
+        <!-- Start of HubSpot Embed Code -->
+        <script type="text/javascript" id="hs-script-loader" async defer src="//js-na1.hs-scripts.com/47792726.js"></script>
+        <!-- End of HubSpot Embed Code -->
+        """,
+        height=0,  # Adjust height as needed
+    )
+    
     st.markdown("""
     <style>
         .reportview-container {
