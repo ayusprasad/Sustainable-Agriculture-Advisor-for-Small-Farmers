@@ -15,7 +15,6 @@ from langchain.chains.conversation.memory import ConversationBufferWindowMemory
 from langchain_groq import ChatGroq
 from datetime import datetime
 
-
 # Dummy function for weather data (replace with actual weather API integration)
 def get_weather_forecast(location):
     weather = {
@@ -55,7 +54,7 @@ def main():
         <script type="text/javascript" id="hs-script-loader" async defer src="//js-na1.hs-scripts.com/47792726.js"></script>
         <!-- End of HubSpot Embed Code -->
         """,
-        height=0,  # Adjust height as needed
+        height=0,  # Adjust height as needed to avoid space usage
     )
     
     st.markdown("""
