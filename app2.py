@@ -14,7 +14,6 @@ from langchain_core.messages import SystemMessage
 from langchain.chains.conversation.memory import ConversationBufferWindowMemory
 from langchain_groq import ChatGroq
 from datetime import datetime
-from googletrans import Translator  # Import Translator
 
 # Dummy function for weather data (replace with actual weather API integration)
 def get_weather_forecast(location):
@@ -24,12 +23,14 @@ def get_weather_forecast(location):
     }
     return weather.get(location, "Weather data not available")
 
+
 # Dummy function for crop yield estimation (simplified for demo purposes)
 def estimate_crop_yield(crop_type, soil_health, weather):
     if soil_health == 'Good' and 'Sunny' in weather:
         return random.randint(80, 100)
     else:
         return random.randint(50, 79)
+
 
 # Farming Calendar Function
 def generate_farming_calendar(crop_type):
@@ -40,6 +41,7 @@ def generate_farming_calendar(crop_type):
     }
     crop_calendar = calendar.get(crop_type, "No calendar available for this crop.")
     return crop_calendar
+
 
 # Main function for the Streamlit app
 def main():
@@ -87,10 +89,6 @@ def main():
     model = st.sidebar.selectbox('Choose a Model', ['llama3-8b-8192', 'mixtral-8x7b-32768', 'gemma-7b-it'])
     conversational_memory_length = st.sidebar.slider('Conversational Memory Length:', 1, 10, value=5)
 
-    # Language selection
-    language = st.sidebar.selectbox("Select Language", ["English", "Spanish", "French", "German", "Hindi"])
-    translator = Translator()
-
     memory = ConversationBufferWindowMemory(k=conversational_memory_length, memory_key="chat_history",
                                             return_messages=True)
 
@@ -135,11 +133,6 @@ def main():
 
         message = {'human': user_question, 'AI': response}
         st.session_state.chat_history.append(message)
-
-        # Translate the response if necessary
-        if language != "English":
-            translated_response = translator.translate(response, dest=language.lower()).text
-            response = translated_response
 
         # Display the response from the chatbot
         st.write(f"**Farming Advice:** {response}")
@@ -187,6 +180,7 @@ def main():
     st.sidebar.write("## ⭐ Your Saved Responses")
     for fav in st.session_state.favorites:
         st.sidebar.write(f"- {fav}")
+
 
 if __name__ == "__main__":
     main()
