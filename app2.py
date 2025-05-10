@@ -76,8 +76,8 @@ def main():
     """, unsafe_allow_html=True)
 
     # Get Groq API key
-    api_key = os.getenv("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")
-    client = Groq(api_key="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")
+    api_key = os.getenv("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")
+    client = Groq(api_key="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")
 
     # Display the logo and title
     st.title("Sustainable Agriculture Advisor")
@@ -104,7 +104,7 @@ def main():
             memory.save_context({'input': message['human']}, {'output': message['AI']})
 
     # Initialize the Groq Langchain chat object
-    groq_chat = ChatGroq(groq_api_key="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", model_name=model)
+    groq_chat = ChatGroq(groq_api_key="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", model_name=model)
 
     if crop_type and location:
         # Modify the system prompt to include farming advice
