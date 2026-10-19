@@ -5,7 +5,7 @@ from typing import Any
 
 import streamlit as st
 from dotenv import load_dotenv
-from groq import Groq
+from groq import APIError, Groq
 
 load_dotenv()
 
@@ -58,7 +58,8 @@ def build_messages(
         context += f" Pest concern: {pest_problem.strip()}."
     messages = [{"role": "system", "content": context}]
 
-    for message in history[-max(0, memory_turns * 2) :]:
+    recent_history = history[-memory_turns * 2 :] if memory_turns > 0 else []
+    for message in recent_history:
         role = message.get("role")
         content = message.get("content", "").strip()
         if role in {"user", "assistant"} and content:
@@ -157,7 +158,7 @@ def main() -> None:
                         MODELS[model_label],
                         initial_messages,
                     )
-                except Exception:
+                except APIError:
                     st.error("The request failed. Check the API key, model access, and network connection, then retry.")
                 else:
                     st.session_state.farmer_context = {
@@ -183,12 +184,15 @@ def main() -> None:
             with st.chat_message(message["role"]):
                 st.markdown(message["content"])
 
-        if st.session_state.messages and st.session_state.messages[-1]["role"] == "assistant":
-            if st.button("Save latest recommendation"):
-                latest = st.session_state.messages[-1]["content"]
-                if latest not in st.session_state.favorites:
-                    st.session_state.favorites.append(latest)
-                st.success("Saved for this session.")
+        if (
+            st.session_state.messages
+            and st.session_state.messages[-1]["role"] == "assistant"
+            and st.button("Save latest recommendation")
+        ):
+            latest = st.session_state.messages[-1]["content"]
+            if latest not in st.session_state.favorites:
+                st.session_state.favorites.append(latest)
+            st.success("Saved for this session.")
 
         follow_up = st.chat_input("Ask a follow-up question")
         if follow_up:
@@ -209,7 +213,7 @@ def main() -> None:
                 with st.spinner("Preparing an answer..."):
                     try:
                         answer = request_advice(api_key, MODELS[model_label], messages)
-                    except Exception:
+                    except APIError:
                         st.error("The request failed. Check the API key, model access, and network connection, then retry.")
                     else:
                         st.session_state.messages.extend(
