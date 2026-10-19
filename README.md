@@ -1,23 +1,57 @@
-# Groq LangChain Conversational Chatbot
+# 🌾 Sustainable Agriculture Advisor for Small Farmers
 
-This repository contains a Streamlit application that allows users to interact with a conversational chatbot powered by the LangChain API. The application uses the Groq API to generate responses and maintains a history of the conversation to provide context for the chatbot's responses.
+An AI-driven agricultural decision-support application built with **Streamlit**, **LangChain**, and **Groq** to empower smallholder farmers with crop planning, organic pest control strategies, weather outlooks, and sustainable soil conservation guidance.
 
-## Features
+---
 
-- **Conversational Interface**: The application provides a conversational interface where users can ask questions or make statements, and the chatbot responds accordingly.
+## 🌟 Key Features
+- **Dynamic Agronomic Consultation:** Generates custom action plans for any crop and region using high-speed Groq LPU inference (LLaMA 3.3).
+- **Farming Calendar Generation:** Automatically maps critical agricultural milestones (planting, weeding, irrigation, harvesting).
+- **Yield Projection Index:** Estimates output quintals based on local soil conditions and simulated meteorological patterns.
+- **Organic & Integrated Pest Management:** Focuses on affordable, biological, and sustainable pest remedies to reduce chemical reliance.
+- **Production Containerization:** Standardized `app.py` entrypoint, pruned lightweight dependencies, and ready-to-run Docker image.
 
-- **Contextual Responses**: The application maintains a history of the conversation, which is used to provide context for the chatbot's responses.
+---
 
-- **LangChain Integration**: The chatbot is powered by the LangChain API, which uses advanced natural language processing techniques to generate human-like responses.
+## 🚀 Quickstart
 
-## Usage
+### 1. Local Run
+```bash
+# Clone repository
+git clone https://github.com/ayusprasad/Sustainable-Agriculture-Advisor-for-Small-Farmers.git
+cd Sustainable-Agriculture-Advisor-for-Small-Farmers
 
-To use this application, you need to have Streamlit and the other required Python libraries installed. You also need to have a Groq API key, which you can obtain by signing up on the Groq website.
+# Install requirements
+pip install -r requirements.txt
 
-Once you have the necessary requirements, you can run the application by executing the script with Streamlit:
+# (Optional) Export Groq API key
+export GROQ_API_KEY="your-groq-key"
 
-```shell
+# Launch Streamlit web app
 streamlit run app.py
 ```
+Open [http://localhost:8501](http://localhost:8501) in your browser.
 
-This will start the Streamlit server and open the application in your web browser. You can then interact with the chatbot, and the application will generate responses based on the history of the conversation.
+---
+
+### 2. Run with Docker
+```bash
+# Build container
+docker build -t agriculture-advisor .
+
+# Run container
+docker run -p 8501:8501 -e GROQ_API_KEY="your-key" agriculture-advisor
+```
+
+---
+
+## 📁 Repository Structure
+```text
+Sustainable-Agriculture-Advisor-for-Small-Farmers/
+├── app.py                     # Standard Streamlit application entrypoint
+├── app2.py                    # Backward compatibility launcher
+├── requirements.txt           # Production Python dependencies
+├── Dockerfile                 # Production container definition
+├── .gitignore                 # Environment and temporary file ignores
+└── README.md                  # Project documentation
+```
